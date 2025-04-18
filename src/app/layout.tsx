@@ -1,8 +1,10 @@
+import { ReduxProvider } from "@/app/reduxe/provider";
 import { ChakraProvider, CSSReset } from "@chakra-ui/react";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 
 import "./globals.css";
+
 const vazir = localFont({
   src: [
     {
@@ -23,11 +25,13 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="fa">
-      <body className={`antialiased ${vazir.className} `}>
-        <ChakraProvider>
-          <CSSReset />
-          {children}
-        </ChakraProvider>
+      <body className={`antialiased ${vazir.className}`}>
+        <ReduxProvider>
+          <ChakraProvider>
+            <CSSReset />
+            {children}
+          </ChakraProvider>
+        </ReduxProvider>
       </body>
     </html>
   );

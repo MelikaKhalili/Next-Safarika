@@ -1,0 +1,24 @@
+.fullscreen-bg {
+  /* background-image: url("../../../../assets/images/BackGroundRegister.png");
+  background-position: center;
+  background-repeat: no-repeat; */
+  background-color: var(--color-primary);
+  height: 90vh;
+  width: 100vw;
+  position: absolute;
+  top: 80px;
+}
+.glass-container {
+  background: rgba(255, 255, 255, 0.785);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 40px;
+  width: 60vw !important;
+  height: 80vh;
+  margin: 30px auto;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+.input-placeholder::placeholder {
+  color: var(--color-secondary);
+}

@@ -1,7 +1,9 @@
+import DashboardHome from "@/components/dash/home/home";
+
 export default function DashBordPage() {
   return (
     <div>
-      <h1>Hello I am MeLIKA</h1>
+      <DashboardHome />
     </div>
   );
 }

@@ -1,17 +1,51 @@
 @import "tailwindcss";
+* {
+  box-sizing: border-box;
+}
+:root {
+  --color-primary: #1c3879;
+  --color-secondary: #607eaa;
+  --color-accent: #eae3d2;
+  --color-four: #fdfdfd;
+}
 
 html,
 body {
+  font-family: "Vazir";
   direction: rtl;
   width: 100vw;
   height: 100vh;
 }
-* {
-  font-family: "Vazir";
-}
+
 @font-face {
   font-family: "Vazir", sans-serif;
   src: url("/public/fonts/Vazirmatn-Thin.ttf") format("ttf");
   font-weight: normal;
   font-style: normal;
+}
+.scrollable-content {
+  width: 300px;
+  height: 200px;
+  overflow-y: auto; /* فعال کردن اسکرول عمودی */
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+/* تنظیمات اسکرول‌بار */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
