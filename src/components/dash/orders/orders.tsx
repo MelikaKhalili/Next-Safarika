@@ -1,0 +1,80 @@
+"use client";
+import DataTable from "@/components/shared/Tabel/DataTabel";
+import { fetchOrders } from "@/features/orders/ordersSlice";
+import moment from "jalali-moment";
+import { useEffect, useState } from "react";
+import { AiOutlineCheckCircle, AiOutlineCloseCircle } from "react-icons/ai";
+import { useDispatch, useSelector } from "react-redux";
+
+export default function OrdersSection() {
+  const dispatch = useDispatch();
+  const [filterOption, setFilterOption] = useState("");
+  const orders = useSelector((state: any) => state.orders.items);
+  const status = useSelector((state: any) => state.orders.status);
+  const error = useSelector((state: any) => state.orders.error);
+  console.log("Orders:", orders);
+
+  useEffect(() => {
+    if (status === "idle" || status === "failed") {
+      dispatch(fetchOrders());
+    }
+    console.log("Orders from Redux:", orders);
+  }, [dispatch, status, orders]);
+
+  const OrdersFilterOptions = [
+    { value: "price", label: "قیمت" },
+    { value: "Deliverystatus", label: "وضعیت ارسال" },
+  ];
+
+  const columns = [
+    { Header: "نام کاربر", accessor: "userName" },
+    { Header: "مبلغ سفارش", accessor: "price" },
+    { Header: "زمان ثبت", accessor: "Registrationtime" },
+    { Header: "وضعیت تحویل", accessor: "Deliverystatus" },
+    { Header: "فعالیت", accessor: "Activity" },
+  ];
+
+  const transformedData =
+    orders && orders.length > 0
+      ? orders.map((order: any) => {
+          const registrationDate = order.deliveryDate
+            ? moment(order.deliveryDate).locale("fa").format("YYYY/MM/DD")
+            : "نامشخص";
+
+          return {
+            userName: order.user?.firstname || "ناشناس",
+            price: order.totalPrice || 0,
+            Registrationtime: registrationDate,
+            Deliverystatus: order.deliveryStatus ? (
+              <AiOutlineCheckCircle className="!text-2xl !text-green-700" />
+            ) : (
+              <AiOutlineCloseCircle className="!text-2xl !text-red-500" />
+            ),
+            Activity: "بررسی سفارش",
+          };
+        })
+      : [];
+
+  if (status === "loading") {
+    return <div>در حال بارگذاری...</div>;
+  }
+
+  if (status === "failed") {
+    return <div>خطا: {error}</div>;
+  }
+
+  console.log(orders);
+  return (
+    <div>
+      <DataTable
+        columns={columns}
+        data={transformedData.length > 0 ? transformedData : []}
+        enableSearch={true}
+        enableFilter={true}
+        filterOption={filterOption}
+        setFilterOption={setFilterOption}
+        filterOptions={OrdersFilterOptions}
+      />
+    </div>
+  );
+}

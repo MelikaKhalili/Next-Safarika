@@ -1,0 +1,17 @@
+/* ShopPage.module.css */
+.pageContainer {
+  position: relative;
+}
+
+.header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10; /* به `HeaderSection` اولویت می‌دهیم */
+}
+
+.shop {
+  position: relative;
+  z-index: 1; /* به `ShopSection` اولویت کمتری می‌دهیم */
+}
