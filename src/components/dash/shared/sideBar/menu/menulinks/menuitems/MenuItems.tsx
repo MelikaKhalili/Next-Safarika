@@ -44,8 +44,8 @@ export default function MenuItems() {
             className={`flex items-center justify-between w-full rounded-md transition-all duration-200 p-3
               ${
                 active
-                  ? "!bg-[#607eaa] text-white font-bold shadow"
-                  : "hover:bg-red-100 text-gray-700"
+                  ? "!bg-[#607eaa] !text-white font-bold shadow"
+                  : "hover:bg-red-100 !text-white/90"
               }`}
           >
             <span>{label}</span>

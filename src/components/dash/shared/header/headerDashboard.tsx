@@ -7,7 +7,7 @@ export default function HeaderDashboard() {
       style={{ backgroundColor: "var(--color-primary)" }}
       className="h-28 shadow-[0_5px_15px_rgba(0,0,0,0.1),0_10px_30px_rgba(0,0,0,0.30)]  flex items-center justify-between p-4"
     >
-      <span style={{ color: "var(--color-four)" }} className=" text-lg">
+      <span style={{ color: "var(--color-accent)" }} className=" text-lg">
         سلام ملیکا جان، به پنل ادمین خوش‌آمدید.
       </span>
       <div
