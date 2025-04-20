@@ -115,11 +115,11 @@ const CommentsSection = () => {
                   <p>{comment.userName}</p>
                   <p>{comment.travelDate}</p>
                 </div>
-                <div className="!border-l-2 !border-l-red-500 h-8"></div>
+                <div className="!border-l-2 !border-l-gray-500 h-8"></div>
                 <div className="flex flex-col">
                   <p>{comment.rating} از 5</p>
                 </div>
-                <div className="!border-l-2 !border-l-red-500 h-8"></div>
+                <div className="!border-l-2 !border-l-gray-500 h-8"></div>
                 <div className="flex flex-row-reverse justify-center items-center outline outline-[var(--color-buttonprimary)] px-4 py-2 rounded-md gap-2">
                   <button className="text-sm cursor-pointer">
                     پیشنهاد میکنم
