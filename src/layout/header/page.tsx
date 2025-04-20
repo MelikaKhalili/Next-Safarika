@@ -30,7 +30,7 @@ export default function HeaderSection() {
   };
 
   return (
-    <div className="flex items-center justify-between  fixed z-[99999999] p-4 gap-15 shadow-md w-full">
+    <div className="flex items-center justify-between  fixed  z-[999999999] p-4 gap-15 shadow-md w-full bg-white">
       <Logo />
       <NavBar
         toggleAccordion={toggleAccordion}

@@ -1,0 +1,13 @@
+.chakra-select__icon {
+  display: none;
+}
+
+.select-icon-left {
+  appearance: none;
+  background-color: transparent;
+  padding-left: 30px;
+  background-position: left center;
+  background-repeat: no-repeat;
+  background-size: 20px;
+  background-image: url("../../../../assets/images/dropdown.png");
+}

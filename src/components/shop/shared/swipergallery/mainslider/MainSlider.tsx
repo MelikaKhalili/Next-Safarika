@@ -15,7 +15,7 @@ export default function MainSlider({ images, thumbsSwiper }: Props) {
   const swiperRef = useRef<any>(null);
 
   return (
-    <div>
+    <div className="relative">
       <Swiper
         onSwiper={(swiper) => (swiperRef.current = swiper)}
         spaceBetween={10}
