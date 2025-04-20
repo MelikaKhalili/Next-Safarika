@@ -2,9 +2,9 @@ import HeaderSection from "@/layout/header/page";
 
 export default function ShopLayout({ children }) {
   return (
-    <div>
+    <div className="w-full flex flex-col items-center">
       <HeaderSection />
-      <main>{children}</main>
+      <main className="pt-24 w-full">{children}</main>
     </div>
   );
 }

@@ -6,7 +6,8 @@
   --color-primary: #1c3879;
   --color-secondary: #607eaa;
   --color-accent: #eae3d2;
-  --color-four: #fdfdfd;
+  --color-background: #fdfdfd;
+  --color-buttonprimary: #48d1cc;
 }
 
 html,
@@ -15,6 +16,7 @@ body {
   direction: rtl;
   width: 100vw;
   height: 100vh;
+  overflow-x: hidden;
 }
 
 @font-face {
@@ -26,12 +28,11 @@ body {
 .scrollable-content {
   width: 300px;
   height: 200px;
-  overflow-y: auto; /* فعال کردن اسکرول عمودی */
+  overflow-y: auto;
   border: 1px solid #ccc;
   padding: 10px;
 }
 
-/* تنظیمات اسکرول‌بار */
 ::-webkit-scrollbar {
   width: 10px;
 }
