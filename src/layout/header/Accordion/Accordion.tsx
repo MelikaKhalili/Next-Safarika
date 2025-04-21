@@ -316,7 +316,7 @@ export default function Accordion({
                     <li>
                       <a
                         href="#"
-                        className="block w-fit hover:!w-full text-right px-3 py-1  transition-all duration-200 hover:!bg-blue-100"
+                        className="block w-fit hover:!w-full text-right px-3 py-1  transition-all duration-200 huseState:!bg-blue-100"
                       >
                         اسکیل ورکر کانادا
                       </a>

@@ -49,4 +49,5 @@ export interface DataTableProps<T> {
   setFilterOption?: (val: string) => void;
   filterOptions?: { value: string | number; label: string }[];
   extraAction?: React.ReactNode;
+  showFooter: boolean;
 }

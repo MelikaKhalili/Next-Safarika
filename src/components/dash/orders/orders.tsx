@@ -1,5 +1,6 @@
 "use client";
 import DataTable from "@/components/shared/Tabel/DataTabel";
+import ModalMoreDetails from "@/components/shared/modal/modalorders/modal-productdetails/modaldetails";
 import { fetchOrders } from "@/features/orders/ordersSlice";
 import moment from "jalali-moment";
 import { useEffect, useState } from "react";
@@ -12,6 +13,8 @@ export default function OrdersSection() {
   const orders = useSelector((state: any) => state.orders.items);
   const status = useSelector((state: any) => state.orders.status);
   const error = useSelector((state: any) => state.orders.error);
+  const [isOpenModal, setIsOpenModal] = useState(false);
+
   console.log("Orders:", orders);
 
   useEffect(() => {
@@ -50,7 +53,9 @@ export default function OrdersSection() {
             ) : (
               <AiOutlineCloseCircle className="!text-2xl !text-red-500" />
             ),
-            Activity: "بررسی سفارش",
+            Activity: (
+              <button onClick={() => setIsOpenModal(true)}>بررسی سفارش</button>
+            ),
           };
         })
       : [];
@@ -75,6 +80,12 @@ export default function OrdersSection() {
         setFilterOption={setFilterOption}
         filterOptions={OrdersFilterOptions}
       />
+      {isOpenModal && (
+        <ModalMoreDetails
+          isOpenModal={isOpenModal}
+          setIsOpenModal={setIsOpenModal}
+        />
+      )}
     </div>
   );
 }

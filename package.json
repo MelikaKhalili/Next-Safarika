@@ -41,6 +41,7 @@
     "react-toastify": "^11.0.5",
     "recharts": "^2.15.2",
     "redux-persist": "^6.0.0",
+    "sweetalert2": "^11.19.1",
     "swiper": "^11.2.6",
     "yup": "^1.6.1"
   },

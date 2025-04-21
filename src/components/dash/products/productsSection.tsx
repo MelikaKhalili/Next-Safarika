@@ -1,14 +1,16 @@
 "use client";
 import DataTable from "@/components/shared/Tabel/DataTabel";
+import showDeleteModal from "@/components/shared/modal/modaldelete/modaldelete";
+import ModalAddProduct from "@/components/shared/modal/modalproduct/modaladd/modaladd";
 import { fetchProducts } from "@/features/products/productsSlice";
 import type { AppDispatch, RootState } from "@/store";
 import { useInView } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
+import { MdDeleteForever } from "react-icons/md";
+import { RiEditBoxFill } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import ButtonAddNewProduct from "./buttonaddnewproduct/buttonAddNewProduct";
-import ModalAddProduct from "./modal-add-product/ModalAddProduct";
 import "./productsSection.css";
-
 export default function ProductsSection() {
   const dispatch = useDispatch<AppDispatch>();
   const [filterOption, setFilterOption] = useState("");
@@ -40,6 +42,7 @@ export default function ProductsSection() {
     { Header: "تعداد موجود", accessor: "Availablequantity" },
     { Header: "وضعیت", accessor: "Status" },
     { Header: "قیمت", accessor: "price" },
+    { Header: "عملیات", accessor: "actions" },
   ];
 
   const formattedProducts = products?.map(
@@ -57,6 +60,21 @@ export default function ProductsSection() {
       Category: product.category?.name || "بدون دسته",
       Organizer: product.brand || "نامشخص",
       Availablequantity: product.quantity || 0,
+      actions: (
+        <div className="flex gap-2 justify-center w-full">
+          <button
+            onClick={() =>
+              showDeleteModal(() => dispatch(deleteProduct(product.id)))
+            }
+            className="!bg-rose-400 hover:!bg-rose-500  !py-2 !px-2 rounded-md "
+          >
+            <MdDeleteForever className="!text-white !text-xl cursor-pointer" />
+          </button>
+          <button className="!bg-gray-400 hover:!bg-gray-500 !py-2 !px-2 rounded-md">
+            <RiEditBoxFill className="!text-white !text-xl cursor-pointer" />
+          </button>
+        </div>
+      ),
       Status:
         product.quantity > 0 ? (
           <button className="!bg-[#87de94] !text-white !px-6 !py-1 rounded-md">
@@ -82,7 +100,7 @@ export default function ProductsSection() {
 
   return (
     <div ref={ref}>
-      <div className="absolute !left-24 top-50">
+      <div>
         <ModalAddProduct
           isOpenModalAddProduct={isOpenModalAddProduct}
           setIsOpenModalAddProduct={setIsOpenModalAddProduct}

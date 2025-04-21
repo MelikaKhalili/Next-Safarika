@@ -16,6 +16,7 @@ const DataTable = <T extends object>({
   filterOption: externalFilterOption,
   setFilterOption: externalSetFilterOption,
   filterOptions = [],
+  showFooter = true,
   extraAction,
 }: DataTableProps<T>) => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -31,6 +32,7 @@ const DataTable = <T extends object>({
   return (
     <div className="flex flex-col justify-center items-start gap-4  py-10">
       <FilterTabel
+        showFooter={showFooter}
         enableFilter={enableFilter}
         updateFilterOption={updateFilterOption}
         filterOption={filterOption}
@@ -61,11 +63,13 @@ const DataTable = <T extends object>({
           <TableCell paginatedData={paginatedData} columns={columns} />
         </table>
       </div>
-      <TableFooter
-        currentPage={currentPage}
-        totalPages={totalPages}
-        setCurrentPage={setCurrentPage}
-      />
+      {showFooter && (
+        <TableFooter
+          currentPage={currentPage}
+          totalPages={totalPages}
+          setCurrentPage={setCurrentPage}
+        />
+      )}
     </div>
   );
 };

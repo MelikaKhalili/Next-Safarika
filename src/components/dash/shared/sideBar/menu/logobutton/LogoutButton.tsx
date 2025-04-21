@@ -18,7 +18,7 @@ export default function LogoutButton() {
       <Button
         onClick={handleLogout}
         style={{
-          backgroundColor: "var(--color-accent)",
+          backgroundColor: "var(--color-accent) ",
           color: "var(--color-primary)",
         }}
         className="w-full flex items-center gap-2"
@@ -26,7 +26,7 @@ export default function LogoutButton() {
         خروج از حساب کاربری
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          fill="#1c3879"
+          fill="white"
           viewBox="0 0 24 24"
           stroke-width="2"
           stroke="#1c3879"

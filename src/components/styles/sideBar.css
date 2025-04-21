@@ -165,10 +165,6 @@ code {
   padding: 10px;
 }
 
-button path {
-  fill: var(--background);
-}
-
 input {
   accent-color: var(--accent);
 }
