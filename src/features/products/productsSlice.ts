@@ -6,7 +6,7 @@ export const fetchProducts = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const products = await getProducts();
-      console.log("Fetched Products:", products); // بررسی داده‌های دریافتی
+      console.log("Fetched Products:", products);
       return products;
     } catch (error: any) {
       return thunkAPI.rejectWithValue("خطا در دریافت محصولات");

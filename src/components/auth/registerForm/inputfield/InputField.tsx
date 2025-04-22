@@ -1,6 +1,6 @@
 "use client";
-import { BASE_URL } from "@/constant/config";
-import axios from "axios";
+import { registerUser } from "@/api/userApi";
+import { setCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import "./InputField.css";
@@ -10,15 +10,16 @@ export default function InputField() {
   const [formData, setFormData] = useState({
     firstname: "",
     lastname: "",
-    username: "",
+    email: "",
     password: "",
     phoneNumber: "",
     address: "",
+    role: "USER",
   });
   const [errorMessages, setErrorMessages] = useState({
     firstname: "",
     lastname: "",
-    username: "",
+    email: "",
     password: "",
     phoneNumber: "",
     address: "",
@@ -43,7 +44,7 @@ export default function InputField() {
     const errors = {
       firstname: "",
       lastname: "",
-      username: "",
+      email: "",
       password: "",
       phoneNumber: "",
       address: "",
@@ -51,7 +52,7 @@ export default function InputField() {
     };
     let isValid = true;
 
-    const { firstname, lastname, username, password, phoneNumber, address } =
+    const { firstname, lastname, email, password, phoneNumber, address } =
       formData;
 
     if (!firstname) {
@@ -64,8 +65,8 @@ export default function InputField() {
       isValid = false;
     }
 
-    if (!username || username.length < 3 || username.length > 20) {
-      errors.username = "نام کاربری باید بین 3 تا 20 کاراکتر باشد.";
+    if (!email || email.length < 3 || email.length > 20) {
+      errors.email = "نام کاربری باید بین 3 تا 20 کاراکتر باشد.";
       isValid = false;
     }
 
@@ -98,20 +99,12 @@ export default function InputField() {
     setLoading(true);
 
     try {
-      const response = await axios.post(`${BASE_URL}/auth/signup`, formData, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      console.log("ثبت‌نام موفق:", response.data);
-
-      const token = response.data.token?.accessToken;
-      const userRole = response.data.user?.role || "USER";
+      const response = await registerUser(formData);
+      const token = response.accessToken;
 
       if (token) {
-        localStorage.setItem("token", token);
-        localStorage.setItem("userRole", userRole);
+        setCookie("token", token, { maxAge: 60 * 60 * 24 });
+        setCookie("userRole", formData.role, { maxAge: 60 * 60 * 24 });
 
         router.push("/");
       } else {
@@ -201,14 +194,14 @@ export default function InputField() {
             <input
               className="flex-1 rounded-md !py-1 !px-3 input-placeholder"
               style={{ outline: "2px solid var(--color-primary)" }}
-              placeholder="نام کاربری خود را وارد کنید"
+              placeholder="ایمیل خود را وارد نمایید"
               type="text"
-              name="username"
-              value={formData.username}
+              name="email"
+              value={formData.email}
               onChange={handleChange}
             />
-            {errorMessages.username && (
-              <p className="text-red-500 text-sm">{errorMessages.username}</p>
+            {errorMessages.email && (
+              <p className="text-red-500 text-sm">{errorMessages.email}</p>
             )}
           </div>
 
@@ -287,10 +280,11 @@ export default function InputField() {
                   setFormData({
                     firstname: "",
                     lastname: "",
-                    username: "",
+                    email: "",
                     password: "",
                     phoneNumber: "",
                     address: "",
+                    role: "USER",
                   })
                 }
               >

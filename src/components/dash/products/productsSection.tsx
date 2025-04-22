@@ -9,6 +9,7 @@ import { useEffect, useRef, useState } from "react";
 import { MdDeleteForever } from "react-icons/md";
 import { RiEditBoxFill } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
+import { FadeLoader } from "react-spinners";
 import ButtonAddNewProduct from "./buttonaddnewproduct/buttonAddNewProduct";
 import "./productsSection.css";
 export default function ProductsSection() {
@@ -41,25 +42,21 @@ export default function ProductsSection() {
     { Header: "برگزارکننده", accessor: "Organizer" },
     { Header: "تعداد موجود", accessor: "Availablequantity" },
     { Header: "وضعیت", accessor: "Status" },
-    { Header: "قیمت", accessor: "price" },
+    { Header: "قیمت", accessor: "Price" },
     { Header: "عملیات", accessor: "actions" },
   ];
 
-  const formattedProducts = products?.map(
-    (product: {
-      images: any[];
-      name: any;
-      category: { name: any };
-      brand: any;
-      quantity: any;
-      status: any;
-      price: any;
-    }) => ({
-      ProductImg: product.images?.[0] || "",
-      ProductName: product.name || "نام ندارد",
-      Category: product.category?.name || "بدون دسته",
-      Organizer: product.brand || "نامشخص",
-      Availablequantity: product.quantity || 0,
+  const formattedProducts = products?.map((product) => {
+    const Availablequantity = parseInt(product.Quantity);
+    console.log("Availablequantity for product:", Availablequantity);
+
+    return {
+      ProductImg: product.Image?.[0] || "",
+      ProductName: product.TourName || "نام ندارد",
+      Category: product.Category || "بدون دسته",
+      Organizer: product.Tourleader || "نامشخص",
+      Availablequantity: Availablequantity,
+
       actions: (
         <div className="flex gap-2 justify-center w-full">
           <button
@@ -75,22 +72,21 @@ export default function ProductsSection() {
           </button>
         </div>
       ),
-      Status:
-        product.quantity > 0 ? (
-          <button className="!bg-[#87de94] !text-white !px-6 !py-1 rounded-md">
-            موجود
-          </button>
-        ) : (
-          <button className="!bg-[#F8A7B4]">ناموجود</button>
-        ),
-      price: product.price || 0,
-    })
-  );
+      Status: Availablequantity ? (
+        <button className="!bg-[#87de94] !text-white !px-6 !py-1 rounded-md">
+          موجود
+        </button>
+      ) : (
+        <button className="!bg-[#F8A7B4]">ناموجود</button>
+      ),
+      Price: product.Price || 0,
+    };
+  });
 
   if (status === "loading") {
     return (
-      <div className="loading-container">
-        <p>در حال بارگذاری محصولات...</p>
+      <div className="fixed top-0 right-0 z-[9999] bg-black/70 w-screen h-screen flex justify-center items-center ">
+        <FadeLoader color="white" />
       </div>
     );
   }
@@ -105,6 +101,7 @@ export default function ProductsSection() {
           isOpenModalAddProduct={isOpenModalAddProduct}
           setIsOpenModalAddProduct={setIsOpenModalAddProduct}
         />
+        {/* <button onClick={() => addToApi()}>Add Product To Api</button> */}
       </div>
       <DataTable
         columns={columns}

@@ -17,7 +17,7 @@ export function middleware(request: NextRequest) {
       return NextResponse.redirect(new URL("/login", request.url));
     }
 
-    if (currentPath === "/dashboard" && userRole !== "ADMIN") {
+    if (currentPath === "/dashboard" && userRole !== "admin") {
       return NextResponse.redirect(new URL("/unauthorized", request.url));
     }
 
@@ -27,7 +27,7 @@ export function middleware(request: NextRequest) {
   }
 
   if (publicRoutes.includes(currentPath) && token) {
-    if (userRole === "ADMIN") {
+    if (userRole === "admin") {
       return NextResponse.redirect(new URL("/dashboard", request.url));
     } else if (userRole === "USER") {
       return NextResponse.redirect(new URL("/shop", request.url));

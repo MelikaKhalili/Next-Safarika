@@ -1,6 +1,4 @@
-import { BASE_URL } from "@/constant/config";
 import { Button, Input } from "@chakra-ui/react";
-import axios from "axios";
 import { setCookie } from "cookies-next";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -13,7 +11,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 
-import { toast, ToastContainer } from "react-toastify";
+import { getUser, login } from "@/api/userApi";
+import { ToastContainer, toast } from "react-toastify";
 
 const schema = Yup.object().shape({
   userName: Yup.string().required("نام کاربری الزامی است"),
@@ -43,28 +42,20 @@ export default function InputField({
 
     setLoading(true);
     try {
-      const response = await axios.post(`${BASE_URL}/auth/login`, {
-        username: userName,
-        password,
-      });
+      const response = await login(userName, password);
+      const user = await getUser(response.accessToken);
 
-      if (response.data?.token?.accessToken) {
-        const token = response.data.token.accessToken;
-        const Role = response.data.data.user.role;
+      const token = response.accessToken;
+      const Role = user.role;
 
-        setCookie("token", token, { maxAge: 60 * 60 * 24 });
-        setCookie("userRole", Role, { maxAge: 60 * 60 * 24 });
-        setIsStart(true);
-
-        toast.success("ورود با موفقیت انجام شد!");
-
-        if (Role === "ADMIN") {
-          router.push("/dashboard");
-        } else {
-          router.push("/");
-        }
+      setCookie("token", token, { maxAge: 60 * 60 * 24 });
+      setCookie("userRole", Role, { maxAge: 60 * 60 * 24 });
+      setIsStart(true);
+      toast.success("ورود با موفقیت انجام شد!");
+      if (Role === "admin") {
+        router.push("/dashboard");
       } else {
-        toast.error("ورود ناموفق بود. توکن دریافت نشد.");
+        router.push("/");
       }
     } catch (error) {
       console.error(error);

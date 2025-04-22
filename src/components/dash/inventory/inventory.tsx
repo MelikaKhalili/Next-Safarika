@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { MdDelete } from "react-icons/md";
 import { RiEditBoxFill } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
+import { FadeLoader } from "react-spinners";
 
 const InventorySection = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -28,6 +29,7 @@ const InventorySection = () => {
   ];
 
   const columns = [
+    { Header: "عکس محصول", accessor: "ProductImg" },
     { Header: "نام محصول", accessor: "ProductName" },
     { Header: "تعداد موجود", accessor: "Availablequantity" },
     { Header: "قیمت", accessor: "price" },
@@ -36,6 +38,10 @@ const InventorySection = () => {
 
   const formattedOrders = products?.map(
     (product: {
+      Price: number;
+      TourName: string;
+      Image: any;
+      Quantity: number;
       images: any[];
       name: string;
       category: { name: string };
@@ -44,13 +50,13 @@ const InventorySection = () => {
       status: string;
       price: number;
     }) => ({
-      ProductImg: product.images?.[0] || "",
-      ProductName: product.name || "نام ندارد",
+      ProductImg: product.Image?.[0] || "",
+      ProductName: product.TourName || "نام ندارد",
       Category: product.category?.name || "بدون دسته",
       Organizer: product.brand || "نامشخص",
-      Availablequantity: product.quantity || 0,
+      Availablequantity: parseInt(product.Quantity) || 0,
       Status: product.status || "نامشخص",
-      price: product.price || 0,
+      price: product.Price || 0,
       actions: (
         <div className="flex gap-2 justify-center">
           <div className="!bg-red-500 py-2 px-2 rounded-md">
@@ -66,8 +72,8 @@ const InventorySection = () => {
 
   if (status === "loading") {
     return (
-      <div className="loading-container">
-        <p>در حال بارگذاری محصولات...</p>
+      <div className="fixed top-0 right-0 z-[9999] bg-black/70 w-screen h-screen flex justify-center items-center ">
+        <FadeLoader color="white" />
       </div>
     );
   }

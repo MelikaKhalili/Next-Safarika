@@ -1,11 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { getUsers } from "../../api/userApi";
+import { getUser } from "../../api/userApi";
 
 export const fetchAdminUser = createAsyncThunk(
   "auth/fetchAdminUser",
   async (_, thunkAPI) => {
     try {
-      const users = await getUsers();
+      const users = await getUser();
       const admin = users.find(
         (user: { role: string }) => user.role === "ADMIN"
       );
