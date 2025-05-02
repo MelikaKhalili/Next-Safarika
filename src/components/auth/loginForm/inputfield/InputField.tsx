@@ -15,7 +15,7 @@ import { getUser, login } from "@/api/userApi";
 import { ToastContainer, toast } from "react-toastify";
 
 const schema = Yup.object().shape({
-  userName: Yup.string().required("نام کاربری الزامی است"),
+  email: Yup.string().required("نام کاربری الزامی است"),
   password: Yup.string()
     .min(6, "رمز عبور باید حداقل 6 کاراکتر باشد")
     .required("رمز عبور الزامی است"),
@@ -37,12 +37,12 @@ export default function InputField({
     resolver: yupResolver(schema),
   });
 
-  const handleLogin = async (data: { userName: string; password: string }) => {
-    const { userName, password } = data;
+  const handleLogin = async (data: { email: string; password: string }) => {
+    const { email, password } = data;
 
     setLoading(true);
     try {
-      const response = await login(userName, password);
+      const response = await login(email, password);
       const user = await getUser(response.accessToken);
 
       const token = response.accessToken;
@@ -70,22 +70,20 @@ export default function InputField({
       style={{ color: "var(--color-accent)" }}
       className="w-full flex flex-col gap-6 relative"
     >
-      <p>لطفا نام کاربری و رمز عبور خود را وارد کنید.</p>
+      <p>لطفا ایمیل و رمز عبور خود را وارد کنید.</p>
       <form onSubmit={handleSubmit(handleLogin)} className="w-full">
         <div className="relative w-full mb-4">
           <MdEmail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-md" />
           <Input
-            {...register("userName")}
+            {...register("email")}
             type="text"
-            name="userName"
+            name="email"
             placeholder="نام کاربری"
             autoComplete="off"
             className="pl-10 pr-3 py-2 border rounded-md w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
-          {errors.userName && (
-            <p className="text-red-500 text-xs mt-1">
-              {errors.userName.message}
-            </p>
+          {errors.email && (
+            <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>
           )}
         </div>
         <div className="relative w-full mb-4">

@@ -1,7 +1,7 @@
 "use client";
 import { AppDispatch } from "@/app/store/store";
-import DataTable from "@/components/shared/Tabel/DataTabel";
 import ModalMoreDetails from "@/components/shared/modal/modalorders/modal-productdetails/modaldetails";
+import DataTable from "@/components/shared/Tabel/DataTabel";
 import { fetchOrders } from "@/features/orders/ordersSlice";
 import moment from "jalali-moment";
 import { useEffect, useState } from "react";
@@ -16,36 +16,55 @@ export default function OrdersSection() {
   const status = useSelector((state: any) => state.orders.status);
   const error = useSelector((state: any) => state.orders.error);
   const [isOpenModal, setIsOpenModal] = useState(false);
-  console.log("Orders:", orders);
+  const [localData, setLocalData] = useState(orders);
+  const [selectedOrder, setSelectedOrder] = useState(null);
+
   useEffect(() => {
     if (status === "idle" || status === "failed") {
       dispatch(fetchOrders());
     }
-    console.log("Orders from Redux:", orders);
-  }, [dispatch, status, orders]);
+  }, [dispatch, status]);
+
+  useEffect(() => {
+    console.log("Orders data:", orders);
+    setLocalData(orders);
+  }, [orders]);
+
   const OrdersFilterOptions = [
     { value: "price", label: "قیمت" },
     { value: "Deliverystatus", label: "وضعیت ارسال" },
   ];
 
   const columns = [
-    { Header: "نام کاربر", accessor: "userName" },
-    { Header: "مبلغ سفارش", accessor: "price" },
-    { Header: "زمان ثبت", accessor: "Registrationtime" },
-    { Header: "وضعیت تحویل", accessor: "Deliverystatus" },
-    { Header: "فعالیت", accessor: "Activity" },
+    { Header: "نام کاربر", accessor: "userName", width: "150px" },
+    { Header: "مبلغ سفارش", accessor: "Price", width: "100px" },
+    { Header: "تعداد", accessor: "Quantity", width: "100px" },
+    { Header: "زمان ثبت", accessor: "Registrationtime", width: "120px" },
+    { Header: "وضعیت تحویل", accessor: "Deliverystatus", width: "100px" },
+    { Header: "فعالیت", accessor: "Activity", width: "100px" },
   ];
 
   const transformedData =
-    orders && orders.length > 0
-      ? orders.map((order: any) => {
+    localData && localData.length > 0
+      ? localData.map((order: any) => {
+          console.log("Current Order:", order);
+          console.log("Price:", order.Price, typeof order.Price);
+          console.log(
+            "Quantity:",
+            order.items[0].Quantity,
+            typeof order.items[0].Quantity
+          );
+
           const registrationDate = order.createdAt
             ? moment(order.deliveryDate).locale("fa").format("YYYY/MM/DD")
             : "نامشخص";
 
           return {
+            id: order.id,
             userName: order.customer_name || "ناشناس",
-            price: order.totalprice || 0,
+            Price: parseInt(order.totalprice) || 0,
+            Quantity: parseInt(order.items[0].Quantity) || 0,
+
             Registrationtime: registrationDate,
             Deliverystatus:
               order.status === "delivered" ? (
@@ -54,7 +73,14 @@ export default function OrdersSection() {
                 <AiOutlineCloseCircle className="!text-2xl !text-red-500" />
               ),
             Activity: (
-              <button onClick={() => setIsOpenModal(true)}>بررسی سفارش</button>
+              <button
+                onClick={() => {
+                  setIsOpenModal(true);
+                  setSelectedOrder(order);
+                }}
+              >
+                بررسی سفارش
+              </button>
             ),
           };
         })
@@ -76,16 +102,18 @@ export default function OrdersSection() {
     <div>
       <DataTable
         columns={columns}
-        data={transformedData.length > 0 ? transformedData : []}
+        data={transformedData}
         enableSearch={true}
         enableFilter={true}
         filterOption={filterOption}
         setFilterOption={setFilterOption}
         filterOptions={OrdersFilterOptions}
+        showFooter={true}
       />
       {isOpenModal && (
         <ModalMoreDetails
           isOpenModal={isOpenModal}
+          order={selectedOrder}
           setIsOpenModal={setIsOpenModal}
         />
       )}
