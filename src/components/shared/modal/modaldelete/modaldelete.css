@@ -1,0 +1,6 @@
+.my-swal-container {
+  z-index: 999999999999999999999999 !important;
+}
+.my-swal-popup {
+  z-index: 100000000000000000000000000000 !important;
+}

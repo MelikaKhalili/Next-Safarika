@@ -1,3 +1,4 @@
+"use client";
 import { BsBusFrontFill } from "react-icons/bs";
 import { CiLocationOn } from "react-icons/ci";
 import { GiAges, GiMountainClimbing } from "react-icons/gi";
@@ -6,59 +7,78 @@ import { LuCalendarDays, LuClock9 } from "react-icons/lu";
 import { MdGroups } from "react-icons/md";
 import { TbHome } from "react-icons/tb";
 
-export default function TourOverview() {
+interface ProductData {
+  TourName?: string;
+  Pres?: string | number;
+  Tourleader?: string;
+  Star?: string;
+  classTour?: string;
+  Los?: string;
+  startTravelDataTime?: string;
+  Origin?: string;
+  Destination?: string;
+  AccomType?: string;
+  Transportation?: string;
+  Agegroup?: string;
+  People?: string;
+  Difficulty?: string;
+}
+
+interface TourOverviewProps {
+  productData: ProductData;
+}
+
+export default function TourOverview({ productData }: TourOverviewProps) {
   return (
-    <div>
-      <h1 className="!font-bold">
-        یزدگردی vip و آفرود کاراکال ۱۰ تا ۱۲ اردیبهشت
-      </h1>
+    <div className="">
+      <h1 className="!font-bold">{productData?.TourName}</h1>
       <div className="flex  justify-between text-sm mb-4">
         <div>
-          <p>مجری تور : 666</p>
-          <span>تور لیدر : خمان</span>
+          <p>مجری تور : {productData?.Pres || 888}</p>
+          <span>تور لیدر : {productData?.Tourleader}</span>
         </div>
         <div>
-          <p>امتیاز تور : 4.6</p>
-          <p>کلاس تور : استاندارد پلاس</p>
+          <p>امتیاز تور : {productData?.Star}</p>
+          <p>کلاس تور : {productData?.classTour || "استاندارد پلاس"}</p>
         </div>
       </div>
       <div className="!border-t-1 !border-t-gray-300"></div>
       <div className="flex flex-col gap-5 my-3">
         <div className="flex !items-center gap-1">
           <LuClock9 />
-          <p>مدت سفر : </p>
+          <p>مدت سفر : {productData?.Los || ""}</p>
         </div>
         <div className="flex !items-center gap-1">
           <LuCalendarDays />
-          <p>تاریخ رفت :</p>
+          <p>تاریخ رفت : {productData?.startTravelDataTime || ""}</p>
         </div>
         <div className="flex !items-center gap-1">
           <CiLocationOn />
-          <p> مبدا :</p>
+          <p> مبدا : {productData?.Origin || ""}</p>
         </div>
         <div className="flex !items-center gap-1">
           <GrMapLocation />
-          <p>مقصد : </p>
+          <p>مقصد : {productData?.Destination || ""}</p>
         </div>
         <div className="flex !items-center gap-1">
           <TbHome />
-          <p>نوع اقامت : </p>
+          <p>نوع اقامت : {productData?.AccomType || ""}</p>
         </div>
         <div className="flex !items-center gap-1">
           <BsBusFrontFill />
-          <p>حمل نقل :</p>
+          <p>حمل نقل : {productData?.Transportation || ""}</p>
         </div>
         <div className="flex !items-center gap-1">
           <GiAges />
-          <p>رده سنی :</p>
+          <p>رده سنی : {productData?.Agegroup || ""}</p>
         </div>
         <div className="flex !items-center gap-1">
           <MdGroups />
-          <p>اندازه گروه :</p>
+          <p>اندازه گروه : {productData?.People || ""}</p>
         </div>
         <div className="flex !items-center gap-1">
           <GiMountainClimbing />
-          <p>درجه سختی :</p>
+          <p>درجه سختی : {productData?.Difficulty || ""}</p>
         </div>
       </div>
       <div className="flex text-[10px] gap-4">

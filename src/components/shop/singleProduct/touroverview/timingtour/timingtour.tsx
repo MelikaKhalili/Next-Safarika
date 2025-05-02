@@ -1,4 +1,4 @@
-export default function TimingTour() {
+export default function TimingTour({ productData }) {
   return (
     <div className="!border-b-1 !border-b-gray-300 mb-4 pb-6">
       <h1 className="!text-xl !font-bold">زمان بندی</h1>
@@ -23,8 +23,8 @@ export default function TimingTour() {
             </svg>
           </div>
           <div>
-            <p>تاریخ رفت :</p>
-            <p>تاریخ رفت :</p>
+            <p>تاریخ رفت :{productData.startTravelDataTime}</p>
+            <p>ساعت رفت :{productData.startTravelTime}</p>
           </div>
         </div>
         <div className="flex items-center !border-r !border-gray-400 p-4">
@@ -47,12 +47,12 @@ export default function TimingTour() {
             </svg>
           </div>
           <div>
-            <p>تاریخ برگشت:</p>
-            <p>زمان برگشت :</p>
+            <p>تاریخ برگشت:{productData.EndTravelDataTime}</p>
+            <p>زمان برگشت :{productData.EndTravelTime}</p>
           </div>
         </div>
         <div className="!border-r !border-gray-400 p-4">
-          <p>زمان تقریبی رسیدن به تهران :</p>
+          <p>زمان تقریبی رسیدن به تهران :{productData.Est.Return}</p>
         </div>
       </div>
     </div>

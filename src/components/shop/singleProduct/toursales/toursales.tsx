@@ -4,7 +4,26 @@ import { useState } from "react";
 import { FiPlus } from "react-icons/fi";
 import { LuMinus } from "react-icons/lu";
 import "./toursales.css";
-export default function Toursales() {
+interface ProductData {
+  TourName?: string;
+  Pres?: string | number;
+  Tourleader?: string;
+  Star?: string;
+  classTour?: string;
+  Los?: string;
+  startTravelDataTime?: string;
+  Origin?: string;
+  Destination?: string;
+  AccomType?: string;
+  Transportation?: string;
+  Agegroup?: string;
+  People?: string;
+  Difficulty?: string;
+}
+interface TourOverviewProps {
+  productData: ProductData;
+}
+export default function Toursales({ productData }: TourOverviewProps) {
   const [quantity, setQuantity] = useState(1);
 
   const increment = () => {
@@ -16,23 +35,27 @@ export default function Toursales() {
       setQuantity((prev) => prev - 1);
     }
   };
+
   return (
     <div className="!border-2 !border-gray-200 px-6 py-4  rounded-xl flex flex-col gap-4">
-      <h1>یزدگردی vip و آفرود کاراکال ۱۰ تا ۱۲ اردیبهشت</h1>
-      <p>(شناسه تور: 3009101)</p>
+      <h1>{productData?.TourName}</h1>
+      <p>(شناسه تور: {productData?.Pres})</p>
       <div className="!border-b-2 !border-b-gray-300 my-4"></div>
       <div className="flex justify-between">
         <span>قیمت برای هر نفر</span>
-        <p className="pt-8">۴٬۲۰۰٬۰۰۰ تومان</p>
+        <p className="pt-8">
+          {Number(productData?.Price).toLocaleString("fa-IR")}
+        </p>
       </div>
       <p>تعداد مسافر :</p>
       <div className="relative flex items-center w-full">
         <button
-          onClick={decrement}
-          className="bg-blue-500 text-white px-4 py-2 rounded-md absolute !right-14 z-10"
+          onClick={increment}
+          className="bg-blue-500 text-white px-4 py-2 rounded-md absolute !left-14 z-10"
         >
-          <LuMinus size={"20"} className="text-blue-600" />
+          <FiPlus size={"20"} className="text-blue-600" />
         </button>
+
         <Input
           type="number"
           value={quantity}
@@ -40,10 +63,10 @@ export default function Toursales() {
           className="text-center w-16 border border-gray-300 rounded-md"
         />
         <button
-          onClick={increment}
-          className="bg-blue-500 text-white px-4 py-2 rounded-md absolute !left-14 z-10"
+          onClick={decrement}
+          className="bg-blue-500 text-white px-4 py-2 rounded-md absolute !right-14 z-10"
         >
-          <FiPlus size={"20"} className="text-blue-600" />
+          <LuMinus size={"20"} className="text-blue-600" />
         </button>
       </div>
       <div>

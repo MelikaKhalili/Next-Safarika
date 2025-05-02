@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 
-export default function Tourdetails() {
+export default function Tourdetails({ productData }) {
   const stickyRef = useRef(null);
   const sentinelRef = useRef(null);
   const [isSticky, setIsSticky] = useState(false);
@@ -61,7 +61,7 @@ export default function Tourdetails() {
               >
                 {item}
                 <span
-                  className={`absolute left-0 bottom-[-18px] h-[2px] w-full bg-blue-500 transform transition-transform duration-300 ${
+                  className={`absolute left-0 bottom-[-18px] h-[2px] w-full !bg-blue-500 transform transition-transform duration-300 ${
                     isSticky && activeIndex === index
                       ? "scale-x-100"
                       : "scale-x-0"

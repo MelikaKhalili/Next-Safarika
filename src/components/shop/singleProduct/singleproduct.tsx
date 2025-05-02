@@ -16,32 +16,58 @@ import TourOverview from "./touroverview/TourOverview";
 import Toursales from "./toursales/toursales";
 import Tourservices from "./tourservices/tourservices";
 import Travelprepinfo from "./travelprepinfo/travelprepinfo";
-export default function SingleProductSection() {
+
+interface ProductData {
+  TourName: string;
+  Organizer: string;
+  TourLeader: string;
+  Rating: number;
+  TourClass: string;
+  Duration: string;
+  DepartureDate: string;
+  Origin: string;
+  Destination: string;
+  AccommodationType: string;
+  Transportation: string;
+  AgeRange: string;
+  GroupSize: string;
+  DifficultyLevel: string;
+  Tags?: string[];
+  [key: string]: any; // For other properties that might be used in child components
+}
+
+interface SingleProductSectionProps {
+  productData: ProductData;
+}
+
+export default function SingleProductSection({
+  productData,
+}: SingleProductSectionProps) {
   return (
     <div className="w-full flex relative">
       <div className="fixed top-22 left-4 w-1/4 !bg-white">
-        <Toursales />
+        <Toursales productData={productData} />
       </div>
       <div className="w-[70%] items-start flex flex-col pr-10">
-        <div className="flex gap-12 w-full !border-b-1 !border-b-gray-300 pb-6 ">
-          <SwiperGallery />
-          <TourOverview />
+        <div className=" mt-22 flex gap-12 w-full !border-b-1 !border-b-gray-300 pb-6 ">
+          <SwiperGallery productData={productData} />
+          <TourOverview productData={productData} />
         </div>
         <div>
-          <Tourdetails />
-          <TimingTour />
-          <Excursions />
-          <Tourservices />
-          <Features />
-          <Residenz />
-          <OriginAndDestination />
-          <Bestamenities />
+          <Tourdetails productData={productData} />
+          <TimingTour productData={productData} />
+          <Excursions productData={productData} />
+          <Tourservices productData={productData} />
+          <Features productData={productData} />
+          <Residenz productData={productData} />
+          <OriginAndDestination productData={productData} />
+          <Bestamenities productData={productData} />
           <Essentials />
-          <Travelprepinfo />
-          <Conditions />
-          <Cancellationpolicy />
+          <Travelprepinfo productData={productData} />
+          <Conditions productData={productData} />
+          <Cancellationpolicy productData={productData} />
           <Standardkarttour />
-          <Comments />
+          <Comments productData={productData} />
         </div>
       </div>
     </div>

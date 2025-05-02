@@ -1,0 +1,90 @@
+/* From Uiverse.io by Botwe-Felix5820 */
+.Readmore {
+  height: 2.8em;
+  width: 9em;
+  background: transparent;
+  -webkit-animation: jello-horizontal 0.9s both;
+  animation: jello-horizontal 0.9s both;
+  border: 2px solid;
+  outline: none;
+  color: #b89379;
+  cursor: pointer;
+  font-size: 17px;
+  border-radius: 20px;
+}
+
+.Readmore:hover {
+  background: #ad804f;
+  color: #ffffff;
+  animation: squeeze3124 0.9s both;
+}
+
+@keyframes squeeze3124 {
+  0% {
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+  }
+
+  30% {
+    -webkit-transform: scale3d(1.25, 0.75, 1);
+    transform: scale3d(1.25, 0.75, 1);
+  }
+
+  40% {
+    -webkit-transform: scale3d(0.75, 1.25, 1);
+    transform: scale3d(0.75, 1.25, 1);
+  }
+
+  50% {
+    -webkit-transform: scale3d(1.15, 0.85, 1);
+    transform: scale3d(1.15, 0.85, 1);
+  }
+
+  65% {
+    -webkit-transform: scale3d(0.95, 1.05, 1);
+    transform: scale3d(0.95, 1.05, 1);
+  }
+
+  75% {
+    -webkit-transform: scale3d(1.05, 0.95, 1);
+    transform: scale3d(1.05, 0.95, 1);
+  }
+
+  100% {
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+  }
+}
+.article-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.article-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.article-header::before {
+  content: "•";
+  font-size: 3rem;
+  color: #26b9b0;
+}
+
+.article-content {
+  padding: 0 20px;
+}
+
+h1 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+article {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #666;
+}
