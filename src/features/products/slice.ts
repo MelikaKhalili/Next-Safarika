@@ -1,25 +1,6 @@
-import {
-  deleteProductById as deleteProductApi,
-  getProducts,
-  updateProductPrice,
-  updateProductQuantity,
-} from "@/api/userApi";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-
-interface Product {
-  id: string;
-  TourName: string;
-  Price: number;
-  Image: string[];
-  Quantity: number;
-  [key: string]: any;
-}
-
-interface ProductsState {
-  items: Product[];
-  status: "idle" | "loading" | "succeeded" | "failed";
-  error: string | null;
-}
+import { deleteProductById, getProducts, updateProductPrice } from "./api";
+import { ProductsState, UpdateProductPayload } from "./types";
 
 const initialState: ProductsState = {
   items: [],
@@ -32,26 +13,12 @@ export const fetchProducts = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const products = await getProducts();
-      if (!products || !Array.isArray(products)) {
-        throw new Error("Invalid response format from server");
-      }
       return products;
     } catch (error: any) {
-      console.error("Error fetching products:", error);
-      return thunkAPI.rejectWithValue(
-        error.response?.data?.message ||
-          error.message ||
-          "خطا در دریافت محصولات"
-      );
+      return thunkAPI.rejectWithValue(error.message || "خطا در دریافت محصولات");
     }
   }
 );
-
-interface UpdateProductPayload {
-  id: string;
-  price?: number;
-  quantity?: number;
-}
 
 export const updateProduct = createAsyncThunk(
   "products/updateProduct",
@@ -61,22 +28,18 @@ export const updateProduct = createAsyncThunk(
         const updatedProduct = await updateProductPrice(id, price);
         return { id, price, updatedProduct };
       }
-      if (quantity !== undefined) {
-        const updatedProduct = await updateProductQuantity(id, quantity);
-        return { id, quantity, updatedProduct };
-      }
-      return { id };
+      return { id, quantity };
     } catch (error: any) {
       return thunkAPI.rejectWithValue(error.message || "خطا در بروزرسانی");
     }
   }
 );
 
-export const deleteProductById = createAsyncThunk(
+export const deleteProduct = createAsyncThunk(
   "products/deleteProduct",
   async (id: string, thunkAPI) => {
     try {
-      await deleteProductApi(id);
+      await deleteProductById(id);
       return id;
     } catch (error: any) {
       return thunkAPI.rejectWithValue(error.message || "خطا در حذف محصول");
@@ -120,14 +83,13 @@ const productsSlice = createSlice({
       .addCase(updateProduct.rejected, (state, action) => {
         state.error = action.payload as string;
       })
-      .addCase(deleteProductById.fulfilled, (state, action) => {
+      .addCase(deleteProduct.fulfilled, (state, action) => {
         state.items = state.items.filter((item) => item.id !== action.payload);
       })
-      .addCase(deleteProductById.rejected, (state, action) => {
+      .addCase(deleteProduct.rejected, (state, action) => {
         state.error = action.payload as string;
       });
   },
 });
 
 export default productsSlice.reducer;
-export { deleteProductById };
