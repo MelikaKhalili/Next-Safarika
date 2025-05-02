@@ -8,7 +8,7 @@ import "./globals.css";
 const vazir = localFont({
   src: [
     {
-      path: "../../public/fonts/Vazirmatn-VariableFont_wght.ttf",
+      path: "../../public/fonts/Vazirmatn-UI-FD-Black.woff2",
       weight: "400",
     },
   ],

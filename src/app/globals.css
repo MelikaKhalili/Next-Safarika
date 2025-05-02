@@ -21,7 +21,7 @@ body {
 
 @font-face {
   font-family: "Vazir", sans-serif;
-  src: url("/public/fonts/Vazirmatn-Thin.ttf") format("ttf");
+  src: url("/public/fonts/Vazirmatn-UI-FD-Medium.woff2") format("woff2");
   font-weight: normal;
   font-style: normal;
 }
@@ -49,4 +49,10 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+video {
+  min-width: auto !important;
+}
+html {
+  scroll-behavior: smooth;
 }

@@ -1,4 +1,4 @@
-import SingleProductSection from "@/components/shop/singleProduct/singleproduct";
+import SingleProductSection from "@/components/shop/singleProduct/SingleProduct";
 
 export default function singleProductPage() {
   return (
