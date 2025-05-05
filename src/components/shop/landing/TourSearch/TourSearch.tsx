@@ -72,7 +72,7 @@ export default function TourSearch() {
             )}
             <p className="mt-2 text-center !text-md">{product.Category}</p>
             <p className="text-center text-green-600 font-semibold">
-              {product.Price?.toLocaleString()} تومان
+              {Number(product.Price).toLocaleString("fa-IR")} تومان
             </p>
           </div>
         ))}
