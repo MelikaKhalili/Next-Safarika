@@ -95,9 +95,7 @@ export default function ModalMoreDetails({
                 {order.totalprice.toLocaleString("fa-IR")} تومان
               </p>
               <p>تعداد سفارش :</p>
-              <p className="!text-sm">
-                {order.items[0].Quantity.toLocaleString("fa-IR")}
-              </p>
+              <p className="!text-sm">{order.Quantity}</p>
               <p>ثبت تحویل سفارش :</p>
               <Button
                 size="sm"

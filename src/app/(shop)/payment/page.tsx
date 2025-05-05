@@ -39,7 +39,11 @@ export default function Payment() {
         items: cartItems,
         totalprice: totalPrice,
         status: "pending",
-        deliver_time: currentDate, // Set current date as delivery time
+        deliver_time: currentDate,
+        Quantity: cartItems.reduce(
+          (acc: number, item: { quantity: number }) => acc + item.quantity,
+          0
+        ),
       };
 
       console.log("Sending to API:", orderInfo);

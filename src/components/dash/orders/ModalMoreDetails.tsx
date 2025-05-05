@@ -1,6 +1,6 @@
 "use client";
 import DataTable from "@/components/shared/Tabel/DataTabel";
-import; { Modal, ModalBody, ModalContent, ModalOverlay } from "@chakra-ui/react";
+import { Modal, ModalBody, ModalContent, ModalOverlay } from "@chakra-ui/react";
 import { useState } from "react";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 
