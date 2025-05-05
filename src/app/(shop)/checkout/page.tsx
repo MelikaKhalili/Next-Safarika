@@ -21,6 +21,10 @@ export default function page() {
   const { customer_name, customer_address, customer_phone, nationalcode } =
     useSelector((state: RootState) => state.form);
   const cartItems = useSelector((state: RootState) => state.cart);
+
+  const isFormValid =
+    customer_name && customer_address && customer_phone && nationalcode;
+
   console.log(cartItems);
   const handleAddToursToOrders = async () => {
     router.push("/payment");
@@ -91,7 +95,7 @@ export default function page() {
               className="!border-2  !border-blue-300"
               _placeholder={{ textColor: "gray.300", fontsize: "sm" }}
             />
-          </div>
+          </div>{" "}
           <div className="flex flex-col justify-start items-start w-full gap-3">
             <label htmlFor="">کد ملی گیرنده را وارد نمایید</label>
             <Input
@@ -113,6 +117,7 @@ export default function page() {
             borderRadius={"xl"}
             isLoading={false}
             _hover={{ bg: "blue.600" }}
+            isDisabled={!isFormValid}
           >
             پرداخت و ثبت سفارش
           </Button>
