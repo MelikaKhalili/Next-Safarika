@@ -226,3 +226,81 @@ export const searchToursByTitle = async (searchValue: any) => {
     console.error(error);
   }
 };
+export const addToCart = async (tourInfo: any) => {
+  try {
+    const response = await axios.post(
+      `${BASE_URL}/api/records/cart`,
+      tourInfo,
+      {
+        headers: headers,
+      }
+    );
+    return response.data.records;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const fetchCartItems = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/api/records/cart`, {
+      headers: headers,
+    });
+    return response.data.records;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const addToOrders = async (orderInfo: any) => {
+  try {
+    const response = await axios.post(
+      `${BASE_URL}/api/records/orders`,
+      orderInfo,
+      {
+        headers: headers,
+      }
+    );
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+//Fetch Delete
+// export const deleteProductById = async (id: string) => {
+//   const response = await axios.delete(`${BASE_URL}/api/records/tours/${id}`, {
+//     headers: headers,
+//   });
+//   console.log("URL:", `${BASE_URL}/api/records/tours/${id}`);
+//   console.log(id);
+//   return response.data;
+// };
+export const deleteCartItems = async (id: any) => {
+  const response = await axios.delete(`${BASE_URL}/api/records/cart/${id}`, {
+    headers: headers,
+  });
+  console.log(id);
+  return response.data;
+};
+export const deleteAllItems = async () => {
+  const response = await axios.delete(
+    `${BASE_URL}/api/records/cart/delete-all`,
+    {
+      headers: headers,
+    }
+  );
+  return response.data;
+};
+export const UpdataStatus = async (orderId: string, newStatus: string) => {
+  const response = await axios.put(
+    `${BASE_URL}/api/records/orders/${orderId}`,
+    {
+      status: newStatus,
+      deliver_time: Date.now(),
+    },
+    {
+      headers: headers,
+    }
+  );
+  return response.data;
+};

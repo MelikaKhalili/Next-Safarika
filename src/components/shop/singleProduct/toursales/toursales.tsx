@@ -1,8 +1,11 @@
 "use client";
+import { addToCart } from "@/api/userApi";
 import { Button, Input, Select } from "@chakra-ui/react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FiPlus } from "react-icons/fi";
 import { LuMinus } from "react-icons/lu";
+import Swal from "sweetalert2";
 import "./toursales.css";
 interface ProductData {
   TourName?: string;
@@ -19,23 +22,43 @@ interface ProductData {
   Agegroup?: string;
   People?: string;
   Difficulty?: string;
+  Price?: number;
 }
 interface TourOverviewProps {
   productData: ProductData;
 }
 export default function Toursales({ productData }: TourOverviewProps) {
   const [quantity, setQuantity] = useState(1);
-
+  const router = useRouter();
   const increment = () => {
     setQuantity((prev) => prev + 1);
   };
-
   const decrement = () => {
     if (quantity > 1) {
       setQuantity((prev) => prev - 1);
     }
   };
-
+  const handleReserve = async () => {
+    const tourInfo = {
+      ...productData,
+      quantity,
+    };
+    try {
+      await addToCart(tourInfo);
+      Swal.fire({
+        title: "افزوده شد!",
+        text: "تور به سبد خرید اضافه شد.",
+        icon: "success",
+        confirmButtonText: "برو به سبد خرید",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          router.push("/cart");
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className="!border-2 !border-gray-200 px-6 py-4  rounded-xl flex flex-col gap-4">
       <h1>{productData?.TourName}</h1>
@@ -44,7 +67,7 @@ export default function Toursales({ productData }: TourOverviewProps) {
       <div className="flex justify-between">
         <span>قیمت برای هر نفر</span>
         <p className="pt-8">
-          {Number(productData?.Price).toLocaleString("fa-IR")}
+          {Number((productData?.Price || 0) * quantity).toLocaleString("fa-IR")}
         </p>
       </div>
       <p>تعداد مسافر :</p>
@@ -105,6 +128,7 @@ export default function Toursales({ productData }: TourOverviewProps) {
           }}
           width={"full"}
           className="hover:!bg-[#1c3879]"
+          onClick={handleReserve}
         >
           رزو تور
         </Button>
