@@ -47,24 +47,33 @@ export default function OrdersSection() {
   const transformedData =
     localData && localData.length > 0
       ? localData.map((order: any) => {
-          console.log("Current Order:", order);
-          console.log("Price:", order.Price, typeof order.Price);
-          console.log(
-            "Quantity:",
-            order.items[0].Quantity,
-            typeof order.items[0].Quantity
-          );
+          console.log("Order Structure:", {
+            id: order.id,
+            items: order.items,
+            quantity: order.Quantity,
+            price: order.Price,
+            totalprice: order.totalprice,
+          });
 
           const registrationDate = order.createdAt
-            ? moment(order.deliveryDate).locale("fa").format("YYYY/MM/DD")
+            ? moment(order.createdAt).locale("fa").format("YYYY/MM/DD")
             : "نامشخص";
+          const deliveryTime = order.deliver_time
+            ? moment(order.deliver_time).locale("fa").format("YYYY/MM/DD HH:mm")
+            : "در انتظار ارسال";
+
+          let totalQuantity = 0;
+          if (Array.isArray(order.items)) {
+            totalQuantity = order.items.reduce((acc: number, item: any) => {
+              return acc + (Number(item.quantity) || 0);
+            }, 0);
+          }
 
           return {
             id: order.id,
             userName: order.customer_name || "ناشناس",
-            Price: parseInt(order.totalprice) || 0,
-            Quantity: parseInt(order.items[0].Quantity) || 0,
-
+            Price: order.totalprice || 40,
+            Quantity: totalQuantity,
             Registrationtime: registrationDate,
             Deliverystatus:
               order.status === "delivered" ? (

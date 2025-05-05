@@ -13,6 +13,10 @@ interface Order {
   status: string;
   createdAt: string;
   deliveryDate: string;
+  items?: Array<{
+    Quantity: string | number;
+  }>;
+  totalprice?: number;
 }
 
 interface OrdersState {
