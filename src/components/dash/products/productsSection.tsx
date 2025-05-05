@@ -4,8 +4,6 @@ import DataTable from "@/components/shared/Tabel/DataTabel";
 import showDeleteModal from "@/components/shared/modal/modaldelete/modaldelete";
 import ModalAddProduct from "@/components/shared/modal/modalproduct/modaladd";
 import { fetchProducts } from "@/features/products/productsSlice";
-import { addToApi } from "@/functionproduct";
-import { Button } from "@chakra-ui/react";
 import { useInView } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { MdDeleteForever } from "react-icons/md";
@@ -142,9 +140,9 @@ export default function ProductsSection() {
           isEditMode={isEditMode}
         />
       </div>
-      <Button bg={"red.500"} onClick={() => addToApi()}>
+      {/* <Button bg={"red.500"} onClick={() => addToApi()}>
         Add Product To Api
-      </Button>
+      </Button> */}
       <DataTable
         columns={columns}
         data={formattedProducts}
