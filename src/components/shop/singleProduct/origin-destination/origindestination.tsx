@@ -28,10 +28,8 @@ export default function OriginAndDestination({
 
     if (!mapContainerRef.current) return;
 
-    const origin = productData?.origin?.coordinates || [35.689247, 51.389015];
-    const destination = productData?.destination?.coordinates || [
-      29.591192, 52.583425,
-    ];
+    const origin = productData?.Coordinates?.Origin;
+    const destination = productData?.Coordinates?.Destination;
 
     const map = L.map(mapContainerRef.current).setView(origin, 7);
     mapRef.current = map;
